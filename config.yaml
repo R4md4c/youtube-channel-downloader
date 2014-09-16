@@ -1,5 +1,8 @@
-API_KEY: 'YOUR_API_KEY'
+API_KEY: API_KEY
 
 channels:
     - UCp0aBUts6iAokAR3_02QwSw
     - UCZSfwNcYIpqO8B9wnBg4HWA
+
+users:
+    - ChilledTrance93

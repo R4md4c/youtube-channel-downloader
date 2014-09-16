@@ -8,3 +8,7 @@ class ChannelItem(object):
     @property
     def item_youtube_url(self):
         return ''
+
+    @property
+    def item_id(self):
+        return self._id
