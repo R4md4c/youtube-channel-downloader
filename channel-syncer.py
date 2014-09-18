@@ -1,23 +1,27 @@
 __author__ = 'ramdac'
 import yaml
+import os
 
 from youtubeapi import YoutubeAPI
 import youtube_dl
 
 
-def read_yaml_file(file):
-    stream = open(file, 'r')
+def read_yaml_file(config_file_name):
+    current_script_dir = os.path.dirname(os.path.realpath(__file__))
+    real_file_path = os.path.join(current_script_dir, config_file_name)
+    stream = open(real_file_path, 'r')
     return yaml.load(stream)
 
 
 if __name__ == "__main__":
+
     config_content = read_yaml_file('config.yaml')
     if config_content['API_KEY'] is None:
         raise AttributeError('Missing API_KEY')
 
+
     channels_array = config_content['channels'] if 'channels' in config_content else []
     users_array = config_content['users'] if 'users' in config_content else []
-
 
     api = YoutubeAPI(config_content['API_KEY'])
     channel_items_array = []
