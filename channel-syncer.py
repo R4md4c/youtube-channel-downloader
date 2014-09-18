@@ -1,7 +1,7 @@
 __author__ = 'ramdac'
 import yaml
 
-from YoutubeAPI import YoutubeAPI
+from youtubeapi import YoutubeAPI
 import youtube_dl
 
 

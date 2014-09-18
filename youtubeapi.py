@@ -1,10 +1,10 @@
-from model import PlaylistItem
+
 
 __author__ = 'ramdac'
 
 from apiclient.discovery import build
-from model.PlaylistItem import PlaylistItem
-from model.VideoItem import VideoItem
+from model.playlistitem import PlaylistItem
+from model.videoitem import VideoItem
 
 
 class YoutubeAPI(object):

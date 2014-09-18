@@ -1,4 +1,4 @@
-from model.ChannelItem import ChannelItem
+from channelitem import ChannelItem
 
 __author__ = 'ramdac'
 
