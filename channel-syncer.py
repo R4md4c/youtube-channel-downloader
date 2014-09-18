@@ -9,6 +9,7 @@ import youtube_dl
 from argparse import ArgumentParser
 from youtubeapi import YoutubeAPI
 
+ARCHIVE_FILE = 'video_dl.cache'
 
 def read_yaml_file(config_file_name):
     if not os.path.isabs(config_file_name):
@@ -63,7 +64,8 @@ if __name__ == "__main__":
 
         # Init the youtube_dl main object to begin download
         youtubeDL = youtube_dl.YoutubeDL({
-            'outtmpl': os.path.join(options['download_dir'], youtube_dl.DEFAULT_OUTTMPL)
+            'outtmpl': os.path.join(options['download_dir'], youtube_dl.DEFAULT_OUTTMPL),
+            'download_archive': ARCHIVE_FILE
         })
         youtubeDL.add_default_info_extractors()
         # Go !
