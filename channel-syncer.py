@@ -1,10 +1,12 @@
+import argparse
+
 __author__ = 'ramdac'
 import yaml
 import os
 
 import youtube_dl
 
-from optparse import OptionParser
+from argparse import ArgumentParser
 from youtubeapi import YoutubeAPI
 
 
@@ -23,23 +25,20 @@ def read_yaml_file(config_file_name):
 
 
 def setup_parser():
-    usage = "usage: %prog [option] arg1"
-    parser = OptionParser(usage=usage)
-    parser.add_option('-c', '--config', help='Specify a custom config.yaml file instead of the default one', dest='config_path')
+    parser = ArgumentParser()
+    parser.add_argument('-c', '--config', help='Specify a custom config.yaml file instead of the default one',
+                        default='config.yaml', dest='config_parameter')
     return parser
+
 
 if __name__ == "__main__":
     parser = setup_parser()
-    (options, args) = parser.parse_args()
-    if options.config_path is not None:
-        file_path = options.config_path
-    else:
-        file_path = 'config.yaml'
+    options = vars(parser.parse_args())
 
-    config_content = read_yaml_file(file_path)
+    config_content = read_yaml_file(options['config_parameter'])
+
     if config_content['API_KEY'] is None:
         raise AttributeError('Missing API_KEY')
-
 
     channels_array = config_content['channels'] if 'channels' in config_content else []
     users_array = config_content['users'] if 'users' in config_content else []
