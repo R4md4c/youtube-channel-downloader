@@ -28,6 +28,8 @@ def setup_parser():
     parser = ArgumentParser()
     parser.add_argument('-c', '--config', help='Specify a custom config.yaml file instead of the default one',
                         default='config.yaml', dest='config_parameter')
+    parser.add_argument('-o', '--output-dir', help='Specify the destination dir that the video will download to',
+                        default='', dest='download_dir')
     return parser
 
 
@@ -60,7 +62,9 @@ if __name__ == "__main__":
             channel_items_array.extend(user_channel_array)
 
         # Init the youtube_dl main object to begin download
-        youtubeDL = youtube_dl.YoutubeDL()
+        youtubeDL = youtube_dl.YoutubeDL({
+            'outtmpl': os.path.join(options['download_dir'], youtube_dl.DEFAULT_OUTTMPL)
+        })
         youtubeDL.add_default_info_extractors()
         # Go !
         youtubeDL.download([channel_item.item_youtube_url for channel_item in channel_items_array])
