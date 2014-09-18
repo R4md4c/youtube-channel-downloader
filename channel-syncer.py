@@ -2,20 +2,41 @@ __author__ = 'ramdac'
 import yaml
 import os
 
-from youtubeapi import YoutubeAPI
 import youtube_dl
+
+from optparse import OptionParser
+from youtubeapi import YoutubeAPI
 
 
 def read_yaml_file(config_file_name):
-    current_script_dir = os.path.dirname(os.path.realpath(__file__))
-    real_file_path = os.path.join(current_script_dir, config_file_name)
-    stream = open(real_file_path, 'r')
-    return yaml.load(stream)
+    if not os.path.isabs(config_file_name):
+        real_file_path = os.path.join(os.getcwd(), config_file_name)
+    else:
+        real_file_path = config_file_name
 
+    try:
+        stream = open(real_file_path, 'r')
+        return yaml.load(stream)
+    except IOError as e:
+        print "I/O error({0}): {1}".format(e.errno, 'Cannot file config.yaml')
+        exit()
+
+
+def setup_parser():
+    usage = "usage: %prog [option] arg1"
+    parser = OptionParser(usage=usage)
+    parser.add_option('-c', '--config', help='Specify a custom config.yaml file instead of the default one', dest='config_path')
+    return parser
 
 if __name__ == "__main__":
+    parser = setup_parser()
+    (options, args) = parser.parse_args()
+    if options.config_path is not None:
+        file_path = options.config_path
+    else:
+        file_path = 'config.yaml'
 
-    config_content = read_yaml_file('config.yaml')
+    config_content = read_yaml_file(file_path)
     if config_content['API_KEY'] is None:
         raise AttributeError('Missing API_KEY')
 

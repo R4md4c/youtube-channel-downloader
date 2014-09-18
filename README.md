@@ -9,8 +9,16 @@ Used to sync a list of users or individual youtube channels that are read from c
   
 
 ## Usage
- Replace the API_KEY with your [own](https://developers.google.com/youtube/v3/getting-started#before-you-start) (or you can follow these instructions in [this](https://github.com/R4md4c/youtube-channel-syncer/wiki/Steps-to-generate-an-API-key-for-the-Youtube-API) wiki page)
-  then add the channel or user IDs that you wish to download inside the config.yaml file, finally execute `python2.7 channel-syncer.py`
+ Firstly, Replace the API_KEY with your [own](https://developers.google.com/youtube/v3/getting-started#before-you-start) (or you can follow these instructions in [this](https://github.com/R4md4c/youtube-channel-syncer/wiki/Steps-to-generate-an-API-key-for-the-Youtube-API) wiki page).  
+ Secondly, Add the channel or user IDs that you wish to download inside the config.yaml file.  
+ Finally, Execute the script using `python2.7 channel-syncer.py`  
+
+
+## Options
+    -h, --help            show this help message and exit
+    -c CONFIG_PATH, --config=CONFIG_PATH Specify a custom config.yaml file instead of the default one
+
+
 
 ## Limitations
  Since this is the first version of the script, so I am sorry to tell that it 
