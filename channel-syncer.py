@@ -11,6 +11,7 @@ from youtubeapi import YoutubeAPI
 
 ARCHIVE_FILE = 'video_dl.cache'
 DEFAULT_CONFIG_FILE = 'config.yaml'
+DEFAULT_MAX_VIDEOS_DOWNLOAD = 100
 
 
 def read_yaml_file(config_file_name):
@@ -35,6 +36,9 @@ def setup_parser():
                         default='', dest='config_parameter')
     parser.add_argument('-o', '--output-dir', help='Specify the destination dir that the video will download to',
                         default='', dest='download_dir')
+    parser.add_argument('-m', '--max-videos-download',
+                        help="Specify the max number of downloads for each user or channel, the downloads are ordered by date",
+                        default=DEFAULT_MAX_VIDEOS_DOWNLOAD, dest='max_videos_download', type=int)
     return parser
 
 
@@ -50,7 +54,7 @@ if __name__ == "__main__":
     channels_array = config_content['channels'] if 'channels' in config_content else []
     users_array = config_content['users'] if 'users' in config_content else []
 
-    api = YoutubeAPI(config_content['API_KEY'])
+    api = YoutubeAPI(config_content['API_KEY'], options['max_videos_download'])
     channel_items_array = []
 
     try:
@@ -69,9 +73,14 @@ if __name__ == "__main__":
         # Init the youtube_dl main object to begin download
         youtubeDL = youtube_dl.YoutubeDL({
             'outtmpl': os.path.join(options['download_dir'], youtube_dl.DEFAULT_OUTTMPL),
-            'download_archive': ARCHIVE_FILE
+            'download_archive': ARCHIVE_FILE,
+            # Compute max downloads for all supplied channels and users
+            'max_downloads': options['max_videos_download'] * len(channels_array) * len(users_array),
+            'continuedl': True
         })
+
         youtubeDL.add_default_info_extractors()
+
         # Go !
         youtubeDL.download([channel_item.item_youtube_url for channel_item in channel_items_array])
 

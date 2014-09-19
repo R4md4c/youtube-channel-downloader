@@ -18,3 +18,4 @@ Used to sync a list of users or individual youtube channels that are read from c
     -h, --help            show this help message and exit
     -c CONFIG_PARAMETER, --config CONFIG_PARAMETER Specify a custom config.yaml file instead of the default one
     -o DOWNLOAD_DIR, --output-dir DOWNLOAD_DIR Specify the destination dir that the video will download to
+    -m MAX_VIDEOS_DOWNLOAD, --max-videos-download MAX_VIDEOS_DOWNLOAD Specify the max number of downloads for each user or channel, the downloads are ordered by date
