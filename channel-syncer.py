@@ -10,9 +10,13 @@ from argparse import ArgumentParser
 from youtubeapi import YoutubeAPI
 
 ARCHIVE_FILE = 'video_dl.cache'
+DEFAULT_CONFIG_FILE = 'config.yaml'
+
 
 def read_yaml_file(config_file_name):
-    if not os.path.isabs(config_file_name):
+    if not config_file_name:
+        real_file_path = os.path.join(os.path.dirname(__file__), DEFAULT_CONFIG_FILE)
+    elif not os.path.isabs(config_file_name):
         real_file_path = os.path.join(os.getcwd(), config_file_name)
     else:
         real_file_path = config_file_name
@@ -28,7 +32,7 @@ def read_yaml_file(config_file_name):
 def setup_parser():
     parser = ArgumentParser()
     parser.add_argument('-c', '--config', help='Specify a custom config.yaml file instead of the default one',
-                        default='config.yaml', dest='config_parameter')
+                        default='', dest='config_parameter')
     parser.add_argument('-o', '--output-dir', help='Specify the destination dir that the video will download to',
                         default='', dest='download_dir')
     return parser
