@@ -75,7 +75,8 @@ if __name__ == "__main__":
             'outtmpl': os.path.join(options['download_dir'], youtube_dl.DEFAULT_OUTTMPL),
             'download_archive': ARCHIVE_FILE,
             # Compute max downloads for all supplied channels and users
-            'max_downloads': options['max_videos_download'] * len(channels_array) * len(users_array),
+            'max_downloads': options['max_videos_download'] * (
+            len(channels_array) if len(channels_array) > 0 else 1) * (len(users_array) if len(users_array) > 0 else 1),
             'continuedl': True
         })
 
